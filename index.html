@@ -7,12 +7,10 @@
 </head>
 <body>
   <h1>Ingredient Classifier 🥦🍗🥚</h1>
-
-  <input type="file" id="imageInput" accept="image/*" capture="environment">
-  <button onclick="classifyImage()">Classify Ingredients</button>
-
-  <div id="results"></div>
-
+  <input type="file" id="imageInput" accept="image/*">
+  <button onclick="classifyImage()">Classify</button>
+  <p id="status"></p>
+  <pre id="results"></pre>
   <script src="script.js"></script>
 </body>
 </html>
