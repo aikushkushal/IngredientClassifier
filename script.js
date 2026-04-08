@@ -1,5 +1,5 @@
 try {
-  const response = await fetch("https://your-project.vercel.app/api/classify", {
+  const response = await fetch("https://project-2ttqk.vercel.app/api/classify", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
