@@ -3,11 +3,7 @@ const resultsDiv = document.getElementById("results");
 
 async function classifyImage() {
   const fileInput = document.getElementById("imageInput");
-
-  if (!fileInput.files.length) {
-    alert("Please select an image!");
-    return;
-  }
+  if (!fileInput.files.length) { alert("Please select an image!"); return; }
 
   statusText.innerText = "Processing image... ⏳";
   resultsDiv.innerText = "";
@@ -24,17 +20,19 @@ async function classifyImage() {
 
     const data = await response.json();
 
-    console.log("API response:", data); // DEBUG
-
-    if (!response.ok) {
-      throw new Error(data.error || "API failed");
-    }
+    if (!response.ok) throw new Error(data.error || "API failed");
 
     statusText.innerText = "✅ Done!";
-    resultsDiv.innerText = data.result;
+    // Optional: format JSON nicely
+    try {
+      const jsonResult = JSON.parse(data.result);
+      resultsDiv.innerHTML = "<pre>" + JSON.stringify(jsonResult, null, 2) + "</pre>";
+    } catch {
+      resultsDiv.innerText = data.result;
+    }
 
   } catch (err) {
-    console.error("Frontend error:", err);
+    console.error(err);
     statusText.innerText = "❌ Error";
     resultsDiv.innerText = err.message;
   }
@@ -45,6 +43,6 @@ function toBase64(file) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result.split(",")[1]);
-    reader.onerror = (error) => reject(error);
+    reader.onerror = error => reject(error);
   });
 }
